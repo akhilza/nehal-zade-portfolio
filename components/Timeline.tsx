@@ -10,6 +10,10 @@ export default function Timeline() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 70%", "end 60%"] });
   const scaleY = useSpring(scrollYProgress, { stiffness: 90, damping: 24 });
 
+  const items = [...timeline]
+    .filter((t) => t.type === "experience" || t.type === "education")
+    .sort((a, b) => parseInt(b.year) - parseInt(a.year));
+
   return (
     <section id="experience" className="px-5 py-20 sm:px-6 md:py-28">
       <div className="mx-auto max-w-5xl">
@@ -25,7 +29,7 @@ export default function Timeline() {
           />
 
           <ol className="space-y-14">
-            {timeline.map((t, i) => {
+            {items.map((t, i) => {
               const left = i % 2 === 0;
               return (
                 <li key={t.title + t.year} className="relative grid md:grid-cols-2">
